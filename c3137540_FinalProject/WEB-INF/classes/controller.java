@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +14,16 @@ public class controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		if(request.getParameter("id") != null) {
+			UserDA dataAccess = new UserDA();
+			HttpSession userSession = request.getSession();
+			
+			Issue clickedIssue = dataAccess.getIssue(Integer.parseInt(request.getParameter("id")));
+			if(clickedIssue != null) {
+				userSession.setAttribute("currentIssue", clickedIssue);
+				redirect(request, response,"/SharedViews/ViewIssueDetails.jsp");
+			}
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -20,12 +31,18 @@ public class controller extends HttpServlet {
 		User userLoggedIn = dataAccess.login(request.getParameter("userName"), request.getParameter("password"));
 		
 		HttpSession userSession = request.getSession();
-		
 		if(userLoggedIn != null) {
 			userSession.setAttribute("userLoggedIn", userLoggedIn);
-			redirect(request, response,"/LoggedIn.jsp");
+			List<Issue> myIssues = dataAccess.getUserMyIssues(userLoggedIn.getUserID(), userLoggedIn.isStaff());
+			userSession.setAttribute("myIssues", myIssues);
+			
+			if(userLoggedIn.isStaff()) {
+				redirect(request, response,"/ITViews/ITMainPage.jsp");
+			}else {
+				redirect(request, response,"/UserViews/UserMainPage.jsp");
+			}
 		}else {
-			redirect(request, response,"/login.jsp");
+			redirect(request, response,"/SharedViews/Login.jsp");
 		}
 	}
 	
