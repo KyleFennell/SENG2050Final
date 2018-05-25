@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class User {
 	private int userID;
 	private String userName;
@@ -70,5 +68,9 @@ public class User {
 	}
 	public void setisStaff(boolean staff) {
 		this.isStaff = staff;
+	}
+	
+	public String getFullName(int userID) {
+		return firstName + " " + surname;
 	}
 }

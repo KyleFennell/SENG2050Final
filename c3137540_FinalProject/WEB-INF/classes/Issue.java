@@ -1,4 +1,5 @@
 import java.sql.Date;
+import java.util.List;
 
 public class Issue {
 	private int issueID;
@@ -7,11 +8,11 @@ public class Issue {
 	private String resolutionDetails;
 	private Date reportedDateTime;
 	private Date resolvedDateTime;
-	private int UserID;
+	private int userID;
 	private int ITStaffID;
 	private String status;
-	private String[] comments;
-	private String[] keywords;
+	private List<Comment> comments;
+	private List<String> keywords;
 	private String category;
 	private String subCategory;
 	
@@ -52,10 +53,10 @@ public class Issue {
 		this.resolvedDateTime = resolved;
 	}
 	public int getUserID() {
-		return UserID;
+		return userID;
 	}
 	public void setUserID(int id) {
-		UserID = id;
+		userID = id;
 	}
 	public int getITStaffID() {
 		return ITStaffID;
@@ -69,16 +70,16 @@ public class Issue {
 	public void setStatus(String stat) {
 		this.status = stat;
 	}
-	public String[] getComments() {
+	public List<Comment> getComments() {
 		return comments;
 	}
-	public void setComments(String[] s) {
+	public void setComments(List<Comment> s) {
 		this.comments = s;
 	}
-	public String[] getKeywords() {
+	public List<String> getKeywords() {
 		return keywords;
 	}
-	public void setKeywords(String[] words) {
+	public void setKeywords(List<String> words) {
 		this.keywords = words;
 	}
 	public String getCategory() {
