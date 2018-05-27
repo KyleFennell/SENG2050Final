@@ -8,11 +8,15 @@ import java.util.List;
 public class UserDA implements UserDAO{
 
 	@Override
-	public List<User> getAllUsers() {
-		Connection connection = DBConnection.getConnection();
+	public List<User> getAllUsers() throws SQLException{
+		Connection connection = null;
+		ResultSet rs = null;
+		PreparedStatement ps = null;
+		
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM User");
-			ResultSet rs = ps.executeQuery();
+			connection = DBConnection.getConnection();
+			ps = connection.prepareStatement("SELECT * FROM User");
+			rs = ps.executeQuery();
 			
 			List<User> userList = new ArrayList<User>();
 			while(rs.next())
@@ -21,94 +25,103 @@ public class UserDA implements UserDAO{
 				userList.add(user);
 			}
 			
-			//Release DB resources
-			ps.close();
-	        rs.close();
-	        connection.close();
+			
 			return userList;
 		} catch (SQLException ex) {
 			ex.printStackTrace();
+		}finally {
+			closeConnections(connection, rs, ps); //Release DB resources
 		}
 		return null;
 	}
 
 	@Override
-	public User getUser(int id) {
-		Connection connection = DBConnection.getConnection();
+	public User getUser(int id) throws SQLException{
+		Connection connection = null;
+		ResultSet rs = null;
+		PreparedStatement ps = null;
+		
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM User WHERE userID = ?");
+			connection = DBConnection.getConnection();
+			ps = connection.prepareStatement("SELECT * FROM User WHERE userID = ?");
 			ps.setInt(1, id);
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 			if(rs.next())
 			{
 				return extractUserFromResultSet(rs);
 			}
 			
-			//Release DB resources
-			ps.close();
-	        rs.close();
-	        connection.close();
+			
 		} catch (SQLException ex) {
 			ex.printStackTrace();
+		}finally {
+			closeConnections(connection, rs, ps); //Release DB resources
 		}
 		return null;
 	}
 	
 	@Override
-	public User getUser(String userName) {
-		Connection connection = DBConnection.getConnection();
+	public User getUser(String userName) throws SQLException{
+		Connection connection = null;
+		ResultSet rs = null;
+		PreparedStatement ps = null;
+		
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM User WHERE userName = ?");
+			connection = DBConnection.getConnection();
+			ps = connection.prepareStatement("SELECT * FROM User WHERE userName = ?");
 			ps.setString(1, userName);
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 			if(rs.next())
 			{
 				return extractUserFromResultSet(rs);
 			}
-			
-			//Release DB resources
-			ps.close();
-	        rs.close();
-	        connection.close();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
+		}finally {
+			closeConnections(connection, rs, ps); //Release DB resources
 		}
 		return null;
 	}
 	
 	@Override
-	public User login(String userName, String pw) {
-	    Connection connection = DBConnection.getConnection();
+	public User login(String userName, String pw) throws SQLException{
+		Connection connection = null;
+		ResultSet rs = null;
+		PreparedStatement ps = null;
+		
 	    try {
-	        PreparedStatement ps = connection.prepareStatement("SELECT * FROM User WHERE userName=? AND password=?");
+	    	connection = DBConnection.getConnection();
+	        ps = connection.prepareStatement("SELECT * FROM User WHERE userName=? AND password=?");
 	        ps.setString(1, userName);
 	        ps.setString(2, pw);
-	        ResultSet rs = ps.executeQuery();
+	        rs = ps.executeQuery();
 	        if(rs.next())
 	        {
 	        	return extractUserFromResultSet(rs);
 	        }
 	        
-	        //Release DB resources
-	        ps.close();
-	        rs.close();
-	        connection.close();
 	    } catch (SQLException ex) {
 	        ex.printStackTrace();
-	    }
+	    }finally {
+			closeConnections(connection, rs, ps); //Release DB resources
+		}
 	    return null;
 	}
 	
 	@Override
-	public List<Issue> getUserMyIssues(int userID, boolean isStaff){
-		Connection connection = DBConnection.getConnection();
+	public List<Issue> getUserMyIssues(int userID, boolean isStaff) throws SQLException{
+		Connection connection = null;
+		ResultSet rs = null;
+		PreparedStatement ps = null;
+
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Issue WHERE UserID=?");
+			connection = DBConnection.getConnection();
+			ps = connection.prepareStatement("SELECT * FROM Issue WHERE UserID=?");
 			if(isStaff) {
 				ps = connection.prepareStatement("SELECT * FROM Issue WHERE ITStaffID=?"); //If the user is an IT staff member retrieve all Issues assigned to them
 			}
 			ps.setInt(1, userID);
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 			
 			List<Issue> issueList = new ArrayList<Issue>();
 			while(rs.next())
@@ -116,48 +129,51 @@ public class UserDA implements UserDAO{
 				Issue issue = extractIssueFromResultSet(rs);
 				issueList.add(issue);
 			}
-			
-			//Release DB resources
-			ps.close();
-	        rs.close();
-	        connection.close();
 			return issueList;
+			
 		} catch (SQLException ex) {
 			ex.printStackTrace();
+		}finally {
+			closeConnections(connection, rs, ps); //Release DB resources
 		}
 		return null;
 	}
 	
 	@Override
-	public Issue getIssue(int issueID){
-		Connection connection = DBConnection.getConnection();
+	public Issue getIssue(int issueID) throws SQLException{
+		Connection connection = null;
+		ResultSet rs = null;
+		PreparedStatement ps = null;
+		
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Issue WHERE issueID=?");
+			connection = DBConnection.getConnection();
+			ps = connection.prepareStatement("SELECT * FROM Issue WHERE issueID=?");
 			ps.setInt(1, issueID);
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 			
 			while(rs.next())
 			{
 				return extractIssueFromResultSet(rs);
 			}
-			
-			//Release DB resources
-			ps.close();
-	        rs.close();
-	        connection.close();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
+		}finally {
+			closeConnections(connection, rs, ps); //Release DB resources
 		}
 		return null;
 	}
 	
 	@Override
-	public List<Comment> getComments(int issueID){
-		Connection connection = DBConnection.getConnection();
+	public List<Comment> getComments(int issueID) throws SQLException{
+		Connection connection = null;
+		ResultSet rs = null;
+		PreparedStatement ps = null;
+
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Comment WHERE issueID=?");
+			connection = DBConnection.getConnection();
+			ps = connection.prepareStatement("SELECT * FROM Comment WHERE issueID=?");
 			ps.setInt(1, issueID);
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 			
 			List<Comment> commentsList = new ArrayList<Comment>();
 			while(rs.next())
@@ -166,45 +182,81 @@ public class UserDA implements UserDAO{
 				comm.setCommentID(rs.getInt("commentID"));
 				comm.setIssueID(rs.getInt("issueID"));
 				comm.setUserID(rs.getInt("userID"));
+				comm.setUserName(rs.getString("userName"));
 				comm.setCommentValue(rs.getString("commentValue"));
-				
+
 				commentsList.add(comm);
 			}
-			
-			//Release DB resources
-			ps.close();
-	        rs.close();
-	        connection.close();
 			return commentsList;
+			
 		} catch (SQLException ex) {
 			ex.printStackTrace();
+		}finally {
+			closeConnections(connection, rs, ps); //Release DB resources
 		}
 		return null;
 	}
 	
 	@Override
-	public List<String> getKeywords(int issueID){
-		Connection connection = DBConnection.getConnection();
+	public List<String> getKeywords(int issueID) throws SQLException{
+		Connection connection = null;
+		ResultSet rs = null;
+		PreparedStatement ps = null;
+		
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT keyword FROM Keyword WHERE issueID=?");
+			connection = DBConnection.getConnection();
+			ps = connection.prepareStatement("SELECT keyword FROM Keyword WHERE issueID=?");
 			ps.setInt(1, issueID);
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 			
 			List<String> keywordList = new ArrayList<String>();
 			while(rs.next())
 			{
 				keywordList.add(rs.getString("keyword"));
 			}
-			
-			//Release DB resources
-			ps.close();
-	        rs.close();
-	        connection.close();
 			return keywordList;
+			
 		} catch (SQLException ex) {
 			ex.printStackTrace();
+		}finally {
+			closeConnections(connection, rs, ps); //Release DB resources
 		}
 		return null;
+	}
+	
+	@Override
+	public void insertComment(Comment comment) throws SQLException{
+		Connection connection = null;
+		PreparedStatement ps = null;
+
+		try {
+			connection = DBConnection.getConnection();
+			ps = connection.prepareStatement("INSERT INTO Comment (issueID, UserID, commentValue) VALUES (?,?,?)");
+			ps.setInt(1, comment.getIssueID());
+			ps.setInt(2, comment.getUserID());
+			ps.setString(3, comment.getCommentValue());
+			
+			// execute insert SQL statement
+			ps.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}finally {
+			closeConnections(connection, null, ps); //Release DB resources
+		}
+	}
+	
+	private void closeConnections(Connection connection, ResultSet rs, PreparedStatement ps) throws SQLException{
+		if (ps != null) {
+			ps.close();
+		}
+
+		if(rs != null) {
+			ps.close();
+		}
+		
+		if (connection != null) {
+			connection.close();
+		}
 	}
 	
 	private User extractUserFromResultSet(ResultSet rs) throws SQLException {
@@ -226,8 +278,10 @@ public class UserDA implements UserDAO{
 		issue.setTitle(rs.getString("title"));
 		issue.setDescription(rs.getString("description"));
 		issue.setResolutionDetails(rs.getString("resolutionDetails"));
-		issue.setReportedDateTime(rs.getDate("reportedDateTime"));
-		issue.setResolvedDateTime(rs.getDate("resolvedDateTime"));
+		issue.setReportedDateTime(rs.getTimestamp("reportedDateTime"));
+		issue.setResolvedDateTime(rs.getTimestamp("resolvedDateTime"));
+		//issue.setReportedDateTime(rs.getDate("reportedDateTime"));
+		//issue.setResolvedDateTime(rs.getDate("resolvedDateTime"));
 		issue.setStatus(rs.getString("status"));
 		issue.setUserID(rs.getInt("userID"));
 		issue.setITStaffID(rs.getInt("ITStaffID"));
@@ -238,5 +292,4 @@ public class UserDA implements UserDAO{
 		
 		return issue;
 	}
-	
 }

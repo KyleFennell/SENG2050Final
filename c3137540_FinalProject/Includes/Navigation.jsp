@@ -1,6 +1,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-<div id="leftNavBar">
 	<c:choose>
 		<c:when test="${userLoggedIn.isStaff()}">	
 		<ul>
@@ -20,4 +18,3 @@
 			</ul>
 		</c:otherwise>
 	</c:choose>
-</div>

@@ -1,11 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <h1>My Issues</h1>
-<div id="myIssuesTable">
 	<c:choose>
 		<c:when test="${not empty myIssues}">
 		
-			<table>
+			<table class="tableWithBorder">
 			<tr><th>Reported Date</th><th>Title</th><th></th></tr>
 			<c:forEach var="issue" items="${myIssues}">
 				<tr>
@@ -20,6 +19,5 @@
 			You have no allocated issues.
 		</c:otherwise>
 	</c:choose>
-</div>
 
 
