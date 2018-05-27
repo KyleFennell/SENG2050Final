@@ -3,6 +3,7 @@ public class Comment {
 	private int issueID;
 	private int userID;
 	private String commentValue;
+	private String userName;
 	
 	public int getCommentID() {
 		return commentID;
@@ -27,5 +28,11 @@ public class Comment {
 	}
 	public void setUserID(int userID) {
 		this.userID = userID;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 }

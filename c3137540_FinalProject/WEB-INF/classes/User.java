@@ -69,8 +69,4 @@ public class User {
 	public void setisStaff(boolean staff) {
 		this.isStaff = staff;
 	}
-	
-	public String getFullName(int userID) {
-		return firstName + " " + surname;
-	}
 }

@@ -1,76 +1,85 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
 		<title>Issue Details</title>
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/static/style.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/static/mainStyle.css">
 	</head>
 	<body>
-		<div id="titleBar">			
-			<h1>Issue Details</h1>
-		</div>
-		
-		<!-- Title Nav bar -->
-		<div id="titleNavBar">
-			Welcome ${userLoggedIn.firstName} ${userLoggedIn.surname}
-			<a class="logOff" href="${pageContext.request.contextPath}/SharedViews/Logout.jsp">Log off</a>
-		</div>
-		
-		<!-- Left Nav bar -->
-		<jsp:include page="/Includes/Navigation.jsp"/>
+		<div class="fixedMenus">
+			<div class="titleBar">			
+				<h1>Issue Details</h1>
+			</div>
+			<div class="titlenav">
+				Welcome ${userLoggedIn.firstName} ${userLoggedIn.surname}
+				<a class="logOff" href="${pageContext.request.contextPath}/SharedViews/Logout.jsp">Log off</a>
+				<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="responsiveLeftNav()">&#9776;</a>	
+			</div>
+			<script>
+				function responsiveLeftNav() 
+				{
+				    var x = document.getElementById("leftNavBar");
+				    if (x.className === "leftnav") {
+				        x.className += " responsive";
+				    } else {
+				        x.className = "leftnav";
+				    }
+				}
+			</script>
 
-		<div id="mainBody">
-			<table>
+			<div class="leftnav" id="leftNavBar">
+				<jsp:include page="/Includes/Navigation.jsp" />
+			</div>
+
+			<div class="rightColumn">
+				<table>
+					<tr>
+						<td>I don't know what we want over here yet</td>
+					</tr>
+					<tr>
+						<td>so this is a place holder</td>
+					</tr>
+				</table>
+			</div>
+		</div>	
+		<div class="main" id="mainBody">
+			<table class="tableWithBorder">
 				<tr>
-					<td>Reported by user: </td><td><c:out value="${currentIssue.userID}"/></td>
+					<th>Reported by user: </th><td><c:out value="${currentIssue.userID}"/></td>
 				</tr>
 				<tr>
-					<td>Reported Date: </td><td><c:out value="${currentIssue.reportedDateTime}"/></td>
+					<th>Reported Date: </th><td><c:out value="${currentIssue.reportedDateTime}"/></td>
 				</tr>	
 				<tr>
-					<td>Title: </td><td><c:out value="${currentIssue.title}"/></td>
+					<th>Title: </th><td><c:out value="${currentIssue.title}"/></td>
 				</tr>	
 				<tr>
-					<td>Description: </td><td><c:out value="${currentIssue.description}"/></td>
+					<th>Description: </th><td><c:out value="${currentIssue.description}"/></td>
 				</tr>
 				<!-- Use ternary operator for optional attributes e.g. ${empty attribute ? true : false} -->
 				<tr>
-					<td>Resolution Details: </td><td><c:out value="${empty currentIssue.resolutionDetails ? 'Issue unresolved' : currentIssue.resolutionDetails}"/></td>
+					<th>Resolution Details: </th><td><c:out value="${empty currentIssue.resolutionDetails ? 'Issue unresolved' : currentIssue.resolutionDetails}"/></td>
 				</tr>
 				<tr>
-					<td>Resolved DateTime: </td><td><c:out value="${empty currentIssue.resolvedDateTime ? 'NA' : currentIssue.resolvedDateTime}"/></td>
+					<th>Resolved DateTime: </th><td><c:out value="${empty currentIssue.resolvedDateTime ? 'NA' : currentIssue.resolvedDateTime}"/></td>
 				</tr>	
 				<tr>
-					<td>Assigned Technician: </td><td><c:out value="${empty currentIssue.ITStaffID ? 'Not yet assigned' : currentIssue.ITStaffID}"/></td>
+					<th>Assigned Technician: </th><td><c:out value="${empty currentIssue.ITStaffID ? 'Not yet assigned' : currentIssue.ITStaffID}"/></td>
 				</tr>	
 				<tr>
-					<td>Status: </td><td><c:out value="${currentIssue.status}"/></td>
+					<th>Status: </th><td><c:out value="${currentIssue.status}"/></td>
 				</tr>	
 				<tr>
-					<td>Category: </td><td><c:out value="${currentIssue.category}"/></td>
+					<th>Category: </th><td><c:out value="${currentIssue.category}"/></td>
 				</tr>	
 				<tr>
-					<td>Sub Category: </td><td><c:out value="${currentIssue.subCategory}"/></td>
+					<th>Sub Category: </th><td><c:out value="${currentIssue.subCategory}"/></td>
 				</tr>				 
 			</table>
 			
-			<h2>Comments:</h2>
-			<c:choose>
-				<c:when test="${not empty currentIssue.comments}">
-					<table>
-					<tr><th>Comment left by</th><th>Comment</th></tr>
-					<c:forEach var="comment" items="${currentIssue.comments}">
-						<tr>
-							<td>User: <c:out value="${comment.userID}"/></td><td><c:out value="${comment.commentValue}"/></td>
-						</tr>
-					</c:forEach>
-					</table>
-				</c:when>    
-				<c:otherwise>
-					Issue has no comments.
-				</c:otherwise>
-			</c:choose>
-		</div>
+			<jsp:include page="/Includes/Comments.jsp"/>
+		</div>		
 	</body>
 </html>

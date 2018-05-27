@@ -1,4 +1,5 @@
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 public class Issue {
@@ -6,8 +7,10 @@ public class Issue {
 	private String title;
 	private String description;
 	private String resolutionDetails;
-	private Date reportedDateTime;
-	private Date resolvedDateTime;
+	//private Date reportedDateTime;
+	//private Date resolvedDateTime;
+	private Timestamp reportedDateTime;
+	private Timestamp resolvedDateTime;
 	private int userID;
 	private int ITStaffID;
 	private String status;
@@ -40,7 +43,19 @@ public class Issue {
 	public void setResolutionDetails(String details) {
 		this.resolutionDetails = details;
 	}
-	public Date getReportedDateTime() {
+	public Timestamp getReportedDateTime() {
+		return reportedDateTime;
+	}
+	public void setReportedDateTime(Timestamp reported) {
+		this.reportedDateTime = reported;
+	}
+	public Timestamp getResolvedDateTime() {
+		return resolvedDateTime;
+	}
+	public void setResolvedDateTime(Timestamp resolved) {
+		this.resolvedDateTime = resolved;
+	}
+	/*public Date getReportedDateTime() {
 		return reportedDateTime;
 	}
 	public void setReportedDateTime(Date reported) {
@@ -51,7 +66,7 @@ public class Issue {
 	}
 	public void setResolvedDateTime(Date resolved) {
 		this.resolvedDateTime = resolved;
-	}
+	}*/
 	public int getUserID() {
 		return userID;
 	}
