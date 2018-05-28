@@ -3,47 +3,83 @@
 	<head>
 		<meta charset="UTF-8">
 
+		<!-- The stylesheet names have changed -->
+
 		<!--!!!! ENTER TITLE !!!!-->
 		<title>Title</title>
-
-		<link rel="stylesheet" href="static/style.css">
+		<link rel="stylesheet" href="static/mainStyle.css">
 	</head>
 	<body>
 		
-		<!--!!!! ENTER HEADING !!!!-->
-		<div id="titleBar">			
-			<h1>Main heading</h1>
+		<!-- Fixed menu is a new div that containes everything but the main body -->
+		<!-- so that it doesn't scroll. Most of the divs id's changed to classes -->
+		<!-- and a couple have both, I think some of their names changed as well.-->
+
+		<div class="fixedMenus">
+			
+			<!--!!!! ENTER HEADING !!!!-->
+			<div class="titleBar">			
+				<h1>Main heading</h1>
+			</div>
+
+			<!-- Title Nav bar -->
+			<div class="titlenav">
+				
+				<a class="logOff" href="Template.html">Log off</a>
+
+			<!-- the js function's name changed here... -->
+
+				<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="responsiveLeftNav()">&#9776;</a>
+					
+			</div>
+
+			<!-- ...and here. -->
+			<script>
+				function responsiveLeftNav() 
+				{
+				    var x = document.getElementById("leftNavBar");
+				    if (x.className === "leftnav") {
+				        x.className += " responsive";
+				    } else {
+				        x.className = "leftnav";
+				    }
+				}
+			</script>
+
+			<!-- Left Nav bar -->
+			<div class="leftnav" id="leftNavBar">
+				<ul>
+					<li><a href="Template.html">Nav 1</a></li>
+
+					<li><a href="Template.html">Nav 2</a></li>
+
+					<li><a href="Template.html">Nav 3</a></li>
+				</ul>
+
+			</div>
+
+			<!-- This div is new, it isn't neseccary yet, it just formats what -->
+			<!-- ever we want in the right column.                             -->
+			<div class="rightColumn">
+
+				<table>
+					<tr>
+						<td>I don't know what we want over here yet</td>
+					</tr>
+					<tr>
+						<td>so this is a place holder</td>
+					</tr>
+				</table>
+
+			</div>
+
 		</div>
-
-		<!-- Title Nav bar -->
-		<div id="titleNavBar">
-
-			<a href="Template.html">Nav 1</a>
-
-			<a href="Template.html">Nav 2</a>
-
-			<a href="Template.html">Nav 3</a> 
-
-			<a class="logOff" href="Template.html">Log off</a>
-
-		</div>
-
-		<!-- Title Nav bar -->
-		<div id="leftNavBar">
-			<ul>
-				<li><a href="Template.html">Nav 1</a></li>
-
-				<li><a href="Template.html">Nav 2</a></li>
-
-				<li><a href="Template.html">Nav 3</a></li>
-			</ul>
-
-		</div>
+		
 
 		<!--!!!! ENTER PAGE CONTENT !!!!-->
-		<div id="mainBody">
-		<!------------------------------------------------------------------------------------------------->
-
+		<div class="main" id="mainBody">
+		<!---------------------------------------------------------------------->
+			
 			<p>
 				An article (with the linguistic glossing abbreviation art) is a word that is used with a noun (as a standalone word or a prefix or suffix) to specify grammatical definiteness of the noun, and in some languages extending to volume or numerical scope.<br/><br/>
 
@@ -51,12 +87,38 @@
 
 				In many languages, articles are a special part of speech which cannot easily be combined[clarification needed] with other parts of speech. In English grammar, articles are frequently considered part of a broader category called determiners, which contains articles, demonstratives (such as "this" and "that"), possessive determiners (such as "my" and "his"), and quantifiers (such as "all" and "few").[1] Articles and other determiners are also sometimes counted as a type of adjective, since they describe the words that they come before. [2]	
 
+				An article (with the linguistic glossing abbreviation art) is a word that is used with a noun (as a standalone word or a prefix or suffix) to specify grammatical definiteness of the noun, and in some languages extending to volume or numerical scope.<br/><br/>
+
+				The articles in English grammar are the and a/an, and in certain contexts some. "An" and "a" are modern forms of the Old English "an", which in Anglian dialects was the number "one" (compare "on" in Saxon dialects) and survived into Modern Scots as the number "owan". Both "on" (respelled "one" by the Norman language) and "an" survived into Modern English, with "one" used as the number and "an" ("a", before nouns that begin with a consonant sound) as an indefinite article.<br/><br/>
+
+				In many languages, articles are a special part of speech which cannot easily be combined[clarification needed] with other parts of speech. In English grammar, articles are frequently considered part of a broader category called determiners, which contains articles, demonstratives (such as "this" and "that"), possessive determiners (such as "my" and "his"), and quantifiers (such as "all" and "few").[1] Articles and other determiners are also sometimes counted as a type of adjective, since they describe the words that they come before. [2]	
+
+				An article (with the linguistic glossing abbreviation art) is a word that is used with a noun (as a standalone word or a prefix or suffix) to specify grammatical definiteness of the noun, and in some languages extending to volume or numerical scope.<br/><br/>
+
+				The articles in English grammar are the and a/an, and in certain contexts some. "An" and "a" are modern forms of the Old English "an", which in Anglian dialects was the number "one" (compare "on" in Saxon dialects) and survived into Modern Scots as the number "owan". Both "on" (respelled "one" by the Norman language) and "an" survived into Modern English, with "one" used as the number and "an" ("a", before nouns that begin with a consonant sound) as an indefinite article.<br/><br/>
+
+				In many languages, articles are a special part of speech which cannot easily be combined[clarification needed] with other parts of speech. In English grammar, articles are frequently considered part of a broader category called determiners, which contains articles, demonstratives (such as "this" and "that"), possessive determiners (such as "my" and "his"), and quantifiers (such as "all" and "few").[1] Articles and other determiners are also sometimes counted as a type of adjective, since they describe the words that they come before. [2]	
+
+				An article (with the linguistic glossing abbreviation art) is a word that is used with a noun (as a standalone word or a prefix or suffix) to specify grammatical definiteness of the noun, and in some languages extending to volume or numerical scope.<br/><br/>
+
+				The articles in English grammar are the and a/an, and in certain contexts some. "An" and "a" are modern forms of the Old English "an", which in Anglian dialects was the number "one" (compare "on" in Saxon dialects) and survived into Modern Scots as the number "owan". Both "on" (respelled "one" by the Norman language) and "an" survived into Modern English, with "one" used as the number and "an" ("a", before nouns that begin with a consonant sound) as an indefinite article.<br/><br/>
+
+				In many languages, articles are a special part of speech which cannot easily be combined[clarification needed] with other parts of speech. In English grammar, articles are frequently considered part of a broader category called determiners, which contains articles, demonstratives (such as "this" and "that"), possessive determiners (such as "my" and "his"), and quantifiers (such as "all" and "few").[1] Articles and other determiners are also sometimes counted as a type of adjective, since they describe the words that they come before. [2]	
+
+				An article (with the linguistic glossing abbreviation art) is a word that is used with a noun (as a standalone word or a prefix or suffix) to specify grammatical definiteness of the noun, and in some languages extending to volume or numerical scope.<br/><br/>
+
+				The articles in English grammar are the and a/an, and in certain contexts some. "An" and "a" are modern forms of the Old English "an", which in Anglian dialects was the number "one" (compare "on" in Saxon dialects) and survived into Modern Scots as the number "owan". Both "on" (respelled "one" by the Norman language) and "an" survived into Modern English, with "one" used as the number and "an" ("a", before nouns that begin with a consonant sound) as an indefinite article.<br/><br/>
+
+				In many languages, articles are a special part of speech which cannot easily be combined[clarification needed] with other parts of speech. In English grammar, articles are frequently considered part of a broader category called determiners, which contains articles, demonstratives (such as "this" and "that"), possessive determiners (such as "my" and "his"), and quantifiers (such as "all" and "few").[1] Articles and other determiners are also sometimes counted as a type of adjective, since they describe the words that they come before. [2]	
+
+				An article (with the linguistic glossing abbreviation art) is a word that is used with a noun (as a standalone word or a prefix or suffix) to specify grammatical definiteness of the noun, and in some languages extending to volume or numerical scope.<br/><br/>
+
+				The articles in English grammar are the and a/an, and in certain contexts some. "An" and "a" are modern forms of the Old English "an", which in Anglian dialects was the number "one" (compare "on" in Saxon dialects) and survived into Modern Scots as the number "owan". Both "on" (respelled "one" by the Norman language) and "an" survived into Modern English, with "one" used as the number and "an" ("a", before nouns that begin with a consonant sound) as an indefinite article.<br/><br/>
+
+				In many languages, articles are a special part of speech which cannot easily be combined[clarification needed] with other parts of speech. In English grammar, articles are frequently considered part of a broader category called determiners, which contains articles, demonstratives (such as "this" and "that"), possessive determiners (such as "my" and "his"), and quantifiers (such as "all" and "few").[1] Articles and other determiners are also sometimes counted as a type of adjective, since they describe the words that they come before. [2]	
+
 			</p>
-
-		<!------------------------------------------------------------------------------------------------->
-		</div>
-
-
-
+		<!---------------------------------------------------------------------->
+		</div>		
 	</body>
 </html>
