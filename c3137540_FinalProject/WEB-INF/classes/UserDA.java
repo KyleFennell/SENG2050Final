@@ -1,8 +1,10 @@
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class UserDA implements UserDAO{
@@ -23,6 +25,36 @@ public class UserDA implements UserDAO{
 			{
 				User user = extractUserFromResultSet(rs);
 				userList.add(user);
+			}
+			
+			
+			return userList;
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}finally {
+			closeConnections(connection, rs, ps); //Release DB resources
+		}
+		return null;
+	}
+	
+	@Override
+	public List<User> getStaffUsers() throws SQLException{
+		Connection connection = null;
+		ResultSet rs = null;
+		PreparedStatement ps = null;
+		
+		try {
+			connection = DBConnection.getConnection();
+			ps = connection.prepareStatement("SELECT * FROM User");
+			rs = ps.executeQuery();
+			
+			List<User> userList = new ArrayList<User>();
+			while(rs.next())
+			{
+				User user = extractUserFromResultSet(rs);
+				if(user.isStaff()) {
+					userList.add(user);
+				}
 			}
 			
 			
@@ -164,6 +196,46 @@ public class UserDA implements UserDAO{
 	}
 	
 	@Override
+	public void updateIssueStatus(String status, int issueID) throws SQLException {
+		Connection connection = null;
+		PreparedStatement ps = null;
+
+		try {
+			connection = DBConnection.getConnection();
+			ps = connection.prepareStatement("UPDATE Issue Set status =? WHERE issueID =?");
+			ps.setString(1, status);
+			ps.setInt(2, issueID);
+			
+			// execute insert SQL statement
+			ps.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}finally {
+			closeConnections(connection, null, ps); //Release DB resources
+		}
+	}
+	
+	@Override
+	public void updateIssueITStaffID(int staffID, int issueID) throws SQLException {
+		Connection connection = null;
+		PreparedStatement ps = null;
+
+		try {
+			connection = DBConnection.getConnection();
+			ps = connection.prepareStatement("UPDATE Issue Set ITStaffID=? WHERE issueID =?");
+			ps.setInt(1, staffID);
+			ps.setInt(2, issueID);
+			
+			// execute insert SQL statement
+			ps.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}finally {
+			closeConnections(connection, null, ps); //Release DB resources
+		}
+	}
+	
+	@Override
 	public List<Comment> getComments(int issueID) throws SQLException{
 		Connection connection = null;
 		ResultSet rs = null;
@@ -231,10 +303,11 @@ public class UserDA implements UserDAO{
 
 		try {
 			connection = DBConnection.getConnection();
-			ps = connection.prepareStatement("INSERT INTO Comment (issueID, UserID, commentValue) VALUES (?,?,?)");
+			ps = connection.prepareStatement("INSERT INTO Comment (issueID, UserID, commentValue, userName) VALUES (?,?,?,?)");
 			ps.setInt(1, comment.getIssueID());
 			ps.setInt(2, comment.getUserID());
 			ps.setString(3, comment.getCommentValue());
+			ps.setString(4, comment.getUserName());
 			
 			// execute insert SQL statement
 			ps.executeUpdate();
@@ -243,6 +316,55 @@ public class UserDA implements UserDAO{
 		}finally {
 			closeConnections(connection, null, ps); //Release DB resources
 		}
+	}
+	
+	@Override
+	public void insertMaintenance(String startDate, String endDate) throws SQLException{
+		Connection connection = null;
+		PreparedStatement ps = null;
+
+		try {
+			connection = DBConnection.getConnection();
+			ps = connection.prepareStatement("INSERT INTO Maintenance (startDate, endDate) VALUES (?,?)");
+			ps.setString(1, startDate);
+			ps.setString(2, endDate);
+			
+			// execute insert SQL statement
+			ps.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}finally {
+			closeConnections(connection, null, ps); //Release DB resources
+		}
+	}
+	
+	
+	@Override
+	public HashMap<String, String> getMaintenance() throws SQLException{
+		Connection connection = null;
+		ResultSet rs = null;
+		PreparedStatement ps = null;
+
+		try {
+			connection = DBConnection.getConnection();
+			ps = connection.prepareStatement("SELECT * FROM Maintenance");
+			rs = ps.executeQuery();
+			
+			HashMap<String, String> maintenanceDates = new HashMap<String, String>();
+			while(rs.next())
+			{
+				String startDate = rs.getString("startDate");
+				String endDate = rs.getString("endDate");
+				maintenanceDates.put(startDate, endDate);
+			}
+			return maintenanceDates;
+			
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}finally {
+			closeConnections(connection, rs, ps); //Release DB resources
+		}
+		return null;
 	}
 	
 	private void closeConnections(Connection connection, ResultSet rs, PreparedStatement ps) throws SQLException{

@@ -33,14 +33,7 @@
 			</div>
 
 			<div class="rightColumn">
-				<table>
-					<tr>
-						<td>I don't know what we want over here yet</td>
-					</tr>
-					<tr>
-						<td>so this is a place holder</td>
-					</tr>
-				</table>
+				<jsp:include page="/Includes/Notifications.jsp" />	 
 			</div>
 		</div>	
 		<div class="main" id="mainBody">
