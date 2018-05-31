@@ -19,10 +19,17 @@ CREATE TABLE Issue(
 	reportedDateTime DateTime NOT NULL,
 	resolvedDateTime DateTime,
 	UserID int NOT NULL,
-	ITStaffID int,
 	status nvarchar(50) NOT NULL,
 	category nvarchar(25) NOT NULL,
 	subCategory nvarchar(25) NOT NULL	
+);
+
+CREATE TABLE UserIssue( 	/* used for the many to many relationship between staff and issues (myissues) */
+	userID int NOT NULL,
+	issueID int NOT NULL,
+
+	FOREIGN KEY(userID) REFERENCES User(userID) ON UPDATE CASCADE ON DELETE NO ACTION,
+	FOREIGN KEY(issueID) REFERENCES Issue(issueID) ON UPDATE CASCADE ON DELETE NO ACTION,
 );
 
 CREATE TABLE Comment(
@@ -36,7 +43,7 @@ CREATE TABLE Comment(
 );
 
 CREATE TABLE Keyword(
-	keywordID int AUTO_INCREMENT PRIMARY KEY,
+	keywordID int AUTO_INCREMENT PRIMARY KEY,  /* i think this is irrelevant because you will always be searching by keywords or issues */
 	keyword nvarchar(25) NOT NULL,
 	issueID int NOT NULL,
 
@@ -62,8 +69,8 @@ INSERT INTO User (userName, password, firstName, surname, email, phoneNum, isSta
 ('staff3', 'password', 'Terry','Hatcher', 'thatcher@gmail.com', '0433397854', 1);
 
 
-INSERT INTO Issue(title, description, reportedDateTime, UserID, status,category,subCategory) VALUES('Network not connecting', 'My network connection won\'t work when trying to connect to the U: in the IT labs'
-,NOW(), 1, 'New','Network','Connectivity');
+INSERT INTO Issue(title, description, reportedDateTime, UserID, status,category,subCategory) VALUES
+('Network not connecting', 'My network connection won\'t work when trying to connect to the U: in the IT labs', NOW(), 1, 'New','Network','Connectivity');
 
 
 
