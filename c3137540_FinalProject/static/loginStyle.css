@@ -1,4 +1,3 @@
-
 body 
 {
 	font-family: Arial, Helvetica, sans-serif;
@@ -28,6 +27,15 @@ input[type=submit]
 	font-weight: bold;
 }
 
+/*Error text colour*/
+.redText{
+	color:red;
+}
+
+.greenText{
+	color:green;
+}
+
 .loginContainer
 {
 	padding: 40px;	
@@ -40,6 +48,11 @@ input[type=submit]
 }
 
 .loginContainer h3
+{
+	text-align: center;
+}
+
+.loginContainer p
 {
 	text-align: center;
 }

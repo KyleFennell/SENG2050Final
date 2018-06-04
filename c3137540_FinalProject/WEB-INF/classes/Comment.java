@@ -4,7 +4,7 @@ public class Comment {
 	private int userID;
 	private String commentValue;
 	private String userName;
-	
+		
 	public int getCommentID() {
 		return commentID;
 	}

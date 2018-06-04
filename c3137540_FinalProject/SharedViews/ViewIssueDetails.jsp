@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +15,7 @@
 			</div>
 			<div class="titlenav">
 				Welcome ${userLoggedIn.firstName} ${userLoggedIn.surname}
-				<a class="logOff" href="${pageContext.request.contextPath}/SharedViews/Logout.jsp">Log off</a>
+				<a class="logOff" href="${pageContext.request.contextPath}/controller">Log off</a>
 				<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="responsiveLeftNav()">&#9776;</a>	
 			</div>
 			<script>
@@ -34,51 +35,47 @@
 			</div>
 
 			<div class="rightColumn">
-				<table>
-					<tr>
-						<td>I don't know what we want over here yet</td>
-					</tr>
-					<tr>
-						<td>so this is a place holder</td>
-					</tr>
-				</table>
+				<jsp:include page="/Includes/IssueActions.jsp"/>
 			</div>
 		</div>	
+		
 		<div class="main" id="mainBody">
+		<h2>Reported Issue Details:</h2>
+			<p><label class="boldText">Issue title: </label>${currentIssue.title} </p>
+			<p><label class="boldText">Description: </label> ${currentIssue.description}</p>
+			
 			<table class="tableWithBorder">
 				<tr>
-					<th>Reported by user: </th><td><c:out value="${currentIssue.userID}"/></td>
-				</tr>
-				<tr>
-					<th>Reported Date: </th><td><c:out value="${currentIssue.reportedDateTime}"/></td>
+					<th>Reported DateTime: </th><td><fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "short" value = "${currentIssue.reportedDateTime}" /></td>
+					<th>Assigned Technician: </th><td><c:out value="${empty currentIssue.ITStaffID ? '-' : currentIssue.ITStaffID}"/></td>
 				</tr>	
 				<tr>
-					<th>Title: </th><td><c:out value="${currentIssue.title}"/></td>
-				</tr>	
-				<tr>
-					<th>Description: </th><td><c:out value="${currentIssue.description}"/></td>
+					<th>Reported by userID: </th><td><c:out value="${currentIssue.userID}"/></td>
+					<th>Reported by userName: </th><td><c:out value="${reportedUserName}"/></td>	
 				</tr>
 				<!-- Use ternary operator for optional attributes e.g. ${empty attribute ? true : false} -->
 				<tr>
-					<th>Resolution Details: </th><td><c:out value="${empty currentIssue.resolutionDetails ? 'Issue unresolved' : currentIssue.resolutionDetails}"/></td>
+					<th>Category: </th><td><c:out value="${currentIssue.category}"/></td>
+					<th>Sub Category: </th><td><c:out value="${currentIssue.subCategory}"/></td>
 				</tr>
 				<tr>
-					<th>Resolved DateTime: </th><td><c:out value="${empty currentIssue.resolvedDateTime ? 'NA' : currentIssue.resolvedDateTime}"/></td>
-				</tr>	
-				<tr>
-					<th>Assigned Technician: </th><td><c:out value="${empty currentIssue.ITStaffID ? 'Not yet assigned' : currentIssue.ITStaffID}"/></td>
-				</tr>	
-				<tr>
 					<th>Status: </th><td><c:out value="${currentIssue.status}"/></td>
+					<th>Resolved DateTime: </th>
+					<td><fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "short" value = "${empty currentIssue.resolvedDateTime ? '' : currentIssue.resolvedDateTime}" /></td>
 				</tr>	
 				<tr>
-					<th>Category: </th><td><c:out value="${currentIssue.category}"/></td>
-				</tr>	
-				<tr>
-					<th>Sub Category: </th><td><c:out value="${currentIssue.subCategory}"/></td>
-				</tr>				 
+					<th>Resolution Details: </th><td colspan="3"><c:out value="${empty currentIssue.resolutionDetails ? '-' : currentIssue.resolutionDetails}"/></td>		
+				</tr>
 			</table>
-			
+			<c:choose>
+				<c:when test="${errorMessage == 'Success! Your comment has been added.' || errorMessage == 'Success! Issue has been updated.'}">
+					<p class="greenText">${errorMessage}</p> 
+				</c:when>
+				<c:otherwise>
+					<p class="redText">${errorMessage}</p>
+				</c:otherwise>
+			</c:choose>
+
 			<jsp:include page="/Includes/Comments.jsp"/>
 		</div>		
 	</body>

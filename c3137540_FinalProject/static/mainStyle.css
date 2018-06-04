@@ -8,12 +8,21 @@ body
 {
 	position: fixed;
 	top: 0;
-	width: 100%;
+ 	width: 100%; 
+ 	height:10%; /*Had to add this as the any buttons in the main section became unusable (perhaps overwritten by the fixed section)*/
 }
 
 /*Error text colour*/
 .redText{
 	color:red;
+}
+
+.greenText{
+	color:green;
+}
+
+.boldText{
+	font-weight:bold;
 }
 
 .tableWithBorder td, th{
@@ -133,13 +142,7 @@ body
 
 .main
 {
-	border-left-style: solid;
-	border-left-width: 3px;
-	border-left-color: black;
-
-	border-right-style: solid;
-	border-right-width: 3px;
-	border-right-color: black;
+	
 
 	margin-left: 21%;
 	margin-right: 21%;
@@ -163,7 +166,8 @@ body
 
 .rightColumn td
 {
-	border-style: solid;
+	border: 1px solid black;
+	/* border-style: solid; */
 }
 
 @media screen and (max-width: 600px)
