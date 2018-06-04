@@ -29,6 +29,7 @@ CREATE TABLE Comment(
 	commentID int AUTO_INCREMENT PRIMARY KEY,
 	issueID int NOT NULL,
 	UserID int NOT NULL,
+	userName nvarchar(25) NOT NULL,
 	commentValue nvarchar(255) NOT NULL,
 
 	FOREIGN KEY(issueID) REFERENCES Issue(issueID) ON UPDATE CASCADE ON DELETE NO ACTION,
@@ -43,23 +44,28 @@ CREATE TABLE Keyword(
 	FOREIGN KEY(issueID) REFERENCES Issue(issueID) ON UPDATE CASCADE ON DELETE NO ACTION
 );
 
+CREATE TABLE Maintenance(
+	startDate nvarchar(10) NOT NULL,
+	endDate nvarchar(10) NOT NULL
+);
+
 INSERT INTO User (userName, password, firstName, surname, email, phoneNum, isStaff) VALUES 
-('user1', 'password', 'Bob','Kennedy', 'bkennedy@gmail.com', '43658765', 0);
+('user1', '5f4dcc3b5aa765d61d8327deb882cf99', 'Bob','Kennedy', 'bkennedy@gmail.com', '43658765', 0);
 
 INSERT INTO User (userName, password, firstName, surname, email, phoneNum, isStaff) VALUES
-('user2', 'password', 'Tiffany','South', 'tSouth@gmail.com', '43321144', 0);
+('user2', '5f4dcc3b5aa765d61d8327deb882cf99', 'Tiffany','South', 'tSouth@gmail.com', '43321144', 0);
 
 INSERT INTO User (userName, password, firstName, surname, email, phoneNum, isStaff) VALUES
-('user3', 'password', 'Paul','Stanton', 'pauly123@hotmail.com', '0439458314', 0);
+('user3', '5f4dcc3b5aa765d61d8327deb882cf99', 'Paul','Stanton', 'pauly123@hotmail.com', '0439458314', 0);
 
 INSERT INTO User (userName, password, firstName, surname, email, phoneNum, isStaff) VALUES
-('staff1', 'password', 'Jenny','Summmers', 'jenny99@gmail.com', '43658798', 1);
+('staff1', '5f4dcc3b5aa765d61d8327deb882cf99', 'Jenny','Summmers', 'jenny99@gmail.com', '43658798', 1);
 
 INSERT INTO User (userName, password, firstName, surname, email, phoneNum, isStaff) VALUES
-('staff2', 'password', 'George','Grundy', 'ggrundy@hotmail.com', '0437988742', 1);
+('staff2', '5f4dcc3b5aa765d61d8327deb882cf99', 'George','Grundy', 'ggrundy@hotmail.com', '0437988742', 1);
 
 INSERT INTO User (userName, password, firstName, surname, email, phoneNum, isStaff) VALUES
-('staff3', 'password', 'Terry','Hatcher', 'thatcher@gmail.com', '0433397854', 1);
+('staff3', '5f4dcc3b5aa765d61d8327deb882cf99', 'Terry','Hatcher', 'thatcher@gmail.com', '0433397854', 1);
 
 
 INSERT INTO Issue(title, description, reportedDateTime, UserID, status,category,subCategory) VALUES('Network not connecting', 'My network connection won\'t work when trying to connect to the U: in the IT labs'
