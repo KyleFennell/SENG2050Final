@@ -15,7 +15,7 @@
 			</div>
 			<div class="titlenav">
 				Welcome ${userLoggedIn.firstName} ${userLoggedIn.surname}
-				<a class="logOff" href="${pageContext.request.contextPath}/SharedViews/Logout.jsp">Log off</a>
+				<a class="logOff" href="${pageContext.request.contextPath}/controller">Log off</a>
 				<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="responsiveLeftNav()">&#9776;</a>	
 			</div>
 			<script>
@@ -68,7 +68,7 @@
 				</tr>
 			</table>
 			<c:choose>
-				<c:when test="${sessionScope.errorMessage == 'Success! Your comment has been added.' || sessionScope.errorMessage == 'Success! Issue has been updated.'}">
+				<c:when test="${errorMessage == 'Success! Your comment has been added.' || errorMessage == 'Success! Issue has been updated.'}">
 					<p class="greenText">${errorMessage}</p> 
 				</c:when>
 				<c:otherwise>

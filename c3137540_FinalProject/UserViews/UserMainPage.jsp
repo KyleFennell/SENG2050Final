@@ -4,6 +4,7 @@
 		<meta charset="UTF-8">
 		<title>User Main</title>
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/static/mainStyle.css">
+		<script src="${pageContext.request.contextPath}/statis/Logout.js"></script>
 	</head>
 	<body>
 		<div class="fixedMenus">
@@ -12,7 +13,7 @@
 			</div>
 			<div class="titlenav">
 				Welcome ${userLoggedIn.firstName} ${userLoggedIn.surname}
-				<a class="logOff" href="${pageContext.request.contextPath}/SharedViews/Logout.jsp">Log off</a>
+   				<a class="logOff" href="${pageContext.request.contextPath}/controller">Log off</a>
 				<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="responsiveLeftNav()">&#9776;</a>	
 			</div>
 			<script>
@@ -33,7 +34,7 @@
 			</div>
 
 			<div class="rightColumn">
-				<jsp:include page="/Includes/Notifications.jsp" />	 
+				<jsp:include page="/Includes/Maintenance.jsp" />	 
 			</div>
 		</div>	
 		<div class="main" id="mainBody">

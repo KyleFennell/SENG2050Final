@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -16,6 +17,15 @@
 			    <input type="password" name="password" placeholder="Enter Password"> 
 			    <input type="submit" name="login" value="Login"/>
 			</form>
+			
+			<c:choose>
+				<c:when test="${errorMessage == 'Success. You have been logged out.'}">
+					<p class="greenText">${errorMessage}</p> 
+				</c:when>
+				<c:otherwise>
+					<p class="redText">${errorMessage}</p>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</body>
 </html>
