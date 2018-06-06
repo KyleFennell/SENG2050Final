@@ -8,11 +8,7 @@
     <welcome-file>default.html</welcome-file>
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
-  </welcome-file-list>
-  
-  <error-page>  
-  <exception-type>java.lang.Exception</exception-type>  
-  <location>/Error.jsp</location>  
-  </error-page> 
-  
+  </welcome-file-list>  
+
 </web-app>
+		

@@ -7,6 +7,7 @@
 		<meta charset="UTF-8">
 		<title>Issue Details</title>
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/static/mainStyle.css">
+		<script src="${pageContext.request.contextPath}/static/Main.js"></script>
 	</head>
 	<body>
 		<div class="fixedMenus">
@@ -14,22 +15,11 @@
 				<h1>Issue Details</h1>
 			</div>
 			<div class="titlenav">
+				<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="responsiveLeftNav()">&#9776;</a>	
 				Welcome ${userLoggedIn.firstName} ${userLoggedIn.surname}
 				<a class="logOff" href="${pageContext.request.contextPath}/controller">Log off</a>
-				<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="responsiveLeftNav()">&#9776;</a>	
 			</div>
-			<script>
-				function responsiveLeftNav() 
-				{
-				    var x = document.getElementById("leftNavBar");
-				    if (x.className === "leftnav") {
-				        x.className += " responsive";
-				    } else {
-				        x.className = "leftnav";
-				    }
-				}
-			</script>
-
+		
 			<div class="leftnav" id="leftNavBar">
 				<jsp:include page="/Includes/Navigation.jsp" />
 			</div>

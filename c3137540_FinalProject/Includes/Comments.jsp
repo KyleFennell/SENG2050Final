@@ -2,9 +2,6 @@
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 
 <h2>Comments:</h2>
-<!-- <div id="hiddenReplyDiv">
-	<textarea name="commentBox" rows="5" cols="50" placeholder="Enter reply"></textarea>
-</div> -->
 <display:table name="sessionScope.currentCommentList" id="commentTable" keepStatus="true" class="displayTagTable" pagesize="10"> <!-- Name must match the name of the session param that you set the list you'd like to display e.g. session.setAttribute( "currentCommentList", currentCommentList); -->
     <display:column title="ID" property="commentID"/>
     <display:column title="No."><%=pageContext.getAttribute("commentTable_rowNum")%></display:column>

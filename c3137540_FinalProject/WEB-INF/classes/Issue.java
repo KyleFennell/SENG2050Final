@@ -17,6 +17,7 @@ public class Issue {
 	private List<String> keywords;
 	private String category;
 	private String subCategory;
+	private boolean isKBArticle;
 	
 	public int getIssueID() {
 		return issueID;
@@ -107,5 +108,11 @@ public class Issue {
 	}
 	public void setSubCategory(String sub) {
 		this.subCategory = sub;
+	}
+	public boolean isKBArticle() {
+		return isKBArticle;
+	}
+	public void setKBArticle(boolean isKBArticle) {
+		this.isKBArticle = isKBArticle;
 	}
 }
