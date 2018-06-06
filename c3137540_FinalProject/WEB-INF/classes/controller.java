@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class controller extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UserDA dataAccess = new UserDA();
 		HttpSession userSession = request.getSession();
-
+		
 		try {
 			if(request.getParameter("login") != null) {		
 				login(dataAccess, userSession, request, response);
@@ -52,6 +53,16 @@ public class controller extends HttpServlet {
 				displayIssueDetails(request, response, dataAccess, userSession);
 			}else if(request.getParameter("startDate")  != null || request.getParameter("endDate")  != null) {
 				setMaintenance(request, response, userSession, dataAccess);
+			}else if(request.getParameter("submitIssue") != null){
+				addIssue(dataAccess, userSession, request, response);
+			}else if(request.getParameter("filterArticle") != null || request.getParameter("resetList") != null){
+				filterArticle(dataAccess, userSession, request, response);
+			}else if(request.getParameter("articleID") != null) {
+					//
+					//Insert display KB article method here
+					//
+					redirect(request, response,"/SharedViews/ViewKBArticle.jsp");
+
 			}else {
 				User userLoggedIn = (User) userSession.getAttribute("userLoggedIn");
 				if(userLoggedIn.isStaff()) {
@@ -69,6 +80,76 @@ public class controller extends HttpServlet {
 		}
 	}
 
+	/*
+	 * Retrieve a list of KB articles from the database and filter it
+	 * If the user has selected a category or subcategory add all issues from those cat/subcats to the list
+	 * If the user has not selected either then the list will be populated will all KB articles in the database
+	 * Update the session list and redirect back to the allKBArticles page
+	 * */
+	private void filterArticle(UserDA dataAccess, HttpSession userSession, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+		List<Issue> kbArticles = dataAccess.getKBArticles(); //Populate knowledge base articles list
+		List<Issue> filteredKbArticles = new ArrayList<Issue>();
+		
+		if(!request.getParameter("subCategories").equals("noneSelected")) {
+			String subCategory = request.getParameter("subCategories");
+			for(Issue i : kbArticles) {
+				if(i.getSubCategory().equals(subCategory)) {
+					filteredKbArticles.add(i);
+				}
+			}
+			userSession.setAttribute("kbArticlesList", filteredKbArticles);
+		}else if(!request.getParameter("categories").equals("noneSelected")) {
+			String category = request.getParameter("categories");
+			for(Issue i : kbArticles) {
+				if(i.getCategory().equals(category)) {
+					filteredKbArticles.add(i);
+				}
+			}
+			userSession.setAttribute("kbArticlesList", filteredKbArticles);
+		}else {//User wants to reset list back to all items
+			userSession.setAttribute("kbArticlesList", kbArticles);
+		}
+		redirect(request, response,"/SharedViews/AllKBArticles.jsp");
+	}
+
+	private void addIssue(UserDA dataAccess, HttpSession userSession, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		try {			
+			String title = request.getParameter("Title");
+			String description = request.getParameter("Description");
+			
+			if (description.length() > 255){
+				request.setAttribute("errorMessage", "Sorry your description is too long. Please ensure it is not greater than 255 characters in length.");				
+			} else if (title.length() > 50){
+				request.setAttribute("errorMessage", "Sorry your title is too long. Please ensure it is not greater than 50 characters in length.");				
+			} else {
+				User userLoggedIn = (User) userSession.getAttribute("userLoggedIn");
+				//Issue currentIssue = (Issue) userSession.getAttribute("currentIssue");
+
+				Issue i = new Issue();
+				i.setUserID(userLoggedIn.getUserID());
+				i.setTitle(title);
+				i.setDescription(description);
+				i.setReportedDateTime(new Timestamp(System.currentTimeMillis()));
+				i.setStatus("New");
+				i.setCategory((String) request.getParameter("Category"));
+				i.setSubCategory((String) request.getParameter("SubCategory"));
+
+				dataAccess.insertIssue(i);
+
+				List<Issue> myIssues = dataAccess.getUserMyIssues(userLoggedIn.getUserID(), userLoggedIn.isStaff()); //Update myIssues list
+				userSession.setAttribute("myIssues", myIssues);
+				
+				request.setAttribute("errorMessage", "Success! Your issue has been processed.");
+				redirect(request, response,"/UserViews/UserMainPage.jsp");
+			}
+			redirect(request, response,"/UserViews/ReportIssue.jsp");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
 	/*
 	 * A plain text string representing a password value is passed in and hashed using MD5, it returns the hashed string. 
 	 * This hashed value is used for the login process (Compare hashed user input with hashed DB value).
@@ -310,6 +391,12 @@ public class controller extends HttpServlet {
 			myIssues = dataAccess.getUserMyIssues(userLoggedIn.getUserID(), userLoggedIn.isStaff()); //Populate myIssues list
 			userSession.setAttribute("myIssues", myIssues);
 
+			List<Issue> kbArticles = dataAccess.getKBArticles(); //Populate knowledge base articles list
+			userSession.setAttribute("kbArticlesList", kbArticles);
+			
+			List<Category> categories = dataAccess.getCategories(); //Populate category list
+			userSession.setAttribute("categoryList", categories);
+			
 			if(!userLoggedIn.isStaff()) { //If just a normal user add pending issues to session list - used in notifications.jsp include
 				List<Issue> myPendingIssues = new ArrayList<Issue>();
 				for(Issue issue: myIssues) {

@@ -45,9 +45,9 @@
 			<h2>Schedule maintenance: </h2>
 			
 			<form action="${pageContext.request.contextPath}/controller" name="maintenanceForm" method="POST">
-				<label for="startDate">Start Date: </label>
+				<label for="startDatePicker">Start Date: </label>
 				<input type="text" name="startDate" id="startDatePicker" /><br/><br/>
-				<label for="endDate">End Date: </label>
+				<label for="endDatePicker">End Date: </label>
 				<input type="text" name="endDate" id="endDatePicker" /><br/><br/>
 				<input type="submit" value="Add maintenance" />
 			</form>

@@ -22,7 +22,7 @@
 			</table>
 		</c:when>    
 		<c:otherwise>
-			You have no allocated issues.
+			<p class="redText">You have no allocated issues.</p>
 		</c:otherwise>
 	</c:choose>
 
